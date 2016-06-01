@@ -1,7 +1,16 @@
 package pages;
 
-import org.openqa.selenium.By;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.CacheLookup;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 
 public class SignUpPage {
@@ -12,7 +21,43 @@ public class SignUpPage {
 		
 		driver = wd;
 	}
-		
+	
+	@FindBy(id = Elements.firstNameField)
+	@CacheLookup
+	public WebElement firstNameField;
+	
+	@FindBy(id = Elements.lastNameField)
+	public WebElement lastNameField;
+	
+	@FindBy(id = Elements.emailField)
+	public WebElement emailField;
+	
+	@FindBy(id = Elements.phoneField)
+	public WebElement phoneField;
+	
+	@FindBy(id = Elements.radioButton_Male)
+	public WebElement radioButton_Male;
+	
+	@FindBy(id = Elements.radioButton_Female)
+	public WebElement radioButton_Female;
+	
+	@FindBy(id = Elements.state_SelectList)
+	public WebElement state_SelectList;
+	
+	@FindBy(id = Elements.toaCheckbox)
+	public WebElement toaCheckbox;
+	
+	@FindBy(id = Elements.submitButton)
+	public WebElement submitButton;
+	
+	@FindBy(id = Elements.errorLine)
+	public WebElement errorLine;
+	
+	@FindBy(id = Elements.currentLocation)
+	public WebElement currentLocation;
+	
+	@FindBy(id = Elements.quote)
+	public WebElement quote;
 		
     public String verify_HTML_title(){
 					
@@ -24,48 +69,53 @@ public class SignUpPage {
     
     public void submit_form(String first_name, String last_name, String email, String phone_number, String gender,String state, String terms ){
     	
-    	driver.findElement(By.id("id_fname")).sendKeys(first_name);
-    	driver.findElement(By.id("id_lname")).sendKeys(last_name);
-    	driver.findElement(By.id("id_email")).sendKeys(email);
-    	driver.findElement(By.id("id_phone")).sendKeys(phone_number);
+    	firstNameField.sendKeys(first_name);
+    	lastNameField.sendKeys(last_name);
+    	emailField.sendKeys(email);
+    	phoneField.sendKeys(phone_number);
     	if (gender.equals("Male")){
-    		driver.findElement(By.id("id_g_radio_01")).click();
+    		radioButton_Male.click();
     	}
     	else{
-    		driver.findElement(By.id("id_g_radio_02")).click();
+    		radioButton_Female.click();
     	}
-    	Select select = new Select(driver.findElement(By.id("id_state")));
+    	Select select = new Select(state_SelectList);
     	select.selectByVisibleText(state);
     	
     	if (terms.equals("Checked")) {
-    		driver.findElement(By.id("id_checkbox")).click();
+    		toaCheckbox.click();
     	}
     	
-    	driver.findElement(By.id("id_submit_button")).click();
+    	submitButton.click();
     	
     	
     }
     
     public String verify_error_handling(String first_name){
     	
-    	driver.findElement(By.id("id_fname")).sendKeys(first_name);
-    	driver.findElement(By.id("id_submit_button")).click();
-    	String errorMessage = driver.findElement(By.id("ErrorLine")).getText();
+    	firstNameField.sendKeys(first_name);
+    	submitButton.click();
+    	String errorMessage = errorLine.getText();
     	return errorMessage;
+    }
+    
+    public String  verify_content(){
+    	
+    	return currentLocation.getText();
+    	
+    	
+    	
+    }
+    
+    public String verify_content_quotes() throws IOException{
+    
+    	return quote.getText();
+    	 
+    	
     }
 
 				
-
-				
-
-				
-
-				
-			
-				
-				
-			
-  }
+}
 		
 	
 
