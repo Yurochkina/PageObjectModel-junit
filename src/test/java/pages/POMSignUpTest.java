@@ -74,8 +74,9 @@ public class POMSignUpTest {
 		@Test 
 		public void test_11_verify_content_quotes() throws IOException {
 			
-			FileReader filereader = new FileReader("/Users/Yurochkina/Documents/workspace/pom-junit/src/test/resources/TestData/quotes.txt");
-	    	BufferedReader bfreader = new BufferedReader(filereader);
+			//FileReader filereader = new FileReader("/Users/Yurochkina/Documents/workspace/pom-junit/src/test/resources/TestData/quotes.txt");
+			FileReader filereader = new FileReader(System.getProperty("user.dir") + "/src/test/resources/TestData/quotes.txt");
+			BufferedReader bfreader = new BufferedReader(filereader);
 	    	String instring;
 	    	final List <String> quotes = new ArrayList();
 	    	while((instring = bfreader.readLine()) !=null) {
